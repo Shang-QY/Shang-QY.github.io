@@ -1,0 +1,115 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="format-detection" content="telephone=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><link rel="icon" href="/images/icons/favicon-16x16.png?v=2.6.2" type="image/png" sizes="16x16"><link rel="icon" href="/images/icons/favicon-32x32.png?v=2.6.2" type="image/png" sizes="32x32"><meta name="description" content="MacOS制作启动盘       Mac 制作 Linux 启动盘 mac os x 下查看dd命令刻录U盘的进度                     Manjaro 21.05 安装和配置       ArchLinux官网：https:&#x2F;&#x2F;archlinux.org&#x2F;  学习环境配置：Manjaro、MSYS2以及常见软件 最受欢迎的Linux发行版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manjaro安装配置踩坑">
+<meta property="og:url" content="http://shang-qy.github.io/2021/06/02/Manjaro%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91/index.html">
+<meta property="og:site_name" content="Qingyu Blog">
+<meta property="og:description" content="MacOS制作启动盘       Mac 制作 Linux 启动盘 mac os x 下查看dd命令刻录U盘的进度                     Manjaro 21.05 安装和配置       ArchLinux官网：https:&#x2F;&#x2F;archlinux.org&#x2F;  学习环境配置：Manjaro、MSYS2以及常见软件 最受欢迎的Linux发行版">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-06-02T09:32:55.000Z">
+<meta property="article:modified_time" content="2021-06-03T12:25:22.712Z">
+<meta property="article:author" content="Shang Qingyu">
+<meta name="twitter:card" content="summary"><title>Manjaro安装配置踩坑 | Qingyu Blog</title><link ref="canonical" href="http://shang-qy.github.io/2021/06/02/Manjaro%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91/"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.12.1/css/all.min.css" type="text/css"><link rel="stylesheet" href="/css/index.css?v=2.6.2"><script>var Stun = window.Stun || {};
+var CONFIG = {
+  root: '/',
+  algolia: undefined,
+  assistSearch: undefined,
+  fontIcon: {"prompt":{"success":"fas fa-check-circle","info":"fas fa-arrow-circle-right","warning":"fas fa-exclamation-circle","error":"fas fa-times-circle"},"copyBtn":"fas fa-copy"},
+  sidebar: {"offsetTop":"20px","tocMaxDepth":6},
+  header: {"enable":true,"showOnPost":true,"scrollDownIcon":false},
+  postWidget: {"endText":true},
+  nightMode: {"enable":true},
+  back2top: {"enable":true},
+  codeblock: {"style":"default","highlight":"light","wordWrap":false},
+  reward: false,
+  fancybox: false,
+  zoomImage: {"gapAside":"20px"},
+  galleryWaterfall: undefined,
+  lazyload: false,
+  pjax: undefined,
+  externalLink: {"icon":{"enable":true,"name":"fas fa-external-link-alt"}},
+  shortcuts: undefined,
+  prompt: {"copyButton":"复制","copySuccess":"复制成功","copyError":"复制失败"},
+  sourcePath: {"js":"js","css":"css","images":"images"},
+};
+
+window.CONFIG = CONFIG;</script><meta name="generator" content="Hexo 5.4.0"></head><body><div class="container" id="container"><header class="header" id="header"><div class="header-inner"><nav class="header-nav header-nav--fixed"><div class="header-nav-inner"><div class="header-nav-menubtn"><i class="fas fa-bars"></i></div><div class="header-nav-menu"><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/"><span class="header-nav-menu-item__icon"><i class="fas fa-home"></i></span><span class="header-nav-menu-item__text">首页</span></a></div><div class="header-nav-menu-item"><a class="header-nav-menu-item__link" href="/archives/"><span class="header-nav-menu-item__icon"><i class="fas fa-folder-open"></i></span><span class="header-nav-menu-item__text">归档</span></a></div></div><div class="header-nav-mode"><div class="mode"><div class="mode-track"><span class="mode-track-moon"></span><span class="mode-track-sun"></span></div><div class="mode-thumb"></div></div></div></div></nav><div class="header-banner"><div class="header-banner-info"><div class="header-banner-info__title">Qingyu Blog</div><div class="header-banner-info__subtitle">Welcome to Qingyu Blog. Have a good day!</div></div></div></div></header><main class="main" id="main"><div class="main-inner"><div class="content-wrap" id="content-wrap"><div class="content" id="content"><!-- Just used to judge whether it is an article page--><div id="is-post"></div><div class="post"><header class="post-header"><h1 class="post-title">Manjaro安装配置踩坑</h1><div class="post-meta"><span class="post-meta-item post-meta-item--createtime"><span class="post-meta-item__icon"><i class="far fa-calendar-plus"></i></span><span class="post-meta-item__info">发表于</span><span class="post-meta-item__value">2021-06-02</span></span><span class="post-meta-item post-meta-item--updatetime"><span class="post-meta-item__icon"><i class="far fa-calendar-check"></i></span><span class="post-meta-item__info">更新于</span><span class="post-meta-item__value">2021-06-03</span></span></div></header><div class="post-body">
+        <h2 id="MacOS制作启动盘"   >
+          <a href="#MacOS制作启动盘" class="heading-link"><i class="fas fa-link"></i></a><a href="#MacOS制作启动盘" class="headerlink" title="MacOS制作启动盘"></a>MacOS制作启动盘</h2>
+      <p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/sitoi/p/13047622.html" >Mac 制作 Linux 启动盘</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33807284/article/details/92859241" >mac os x 下查看dd命令刻录U盘的进度</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="Manjaro-21-05-安装和配置"   >
+          <a href="#Manjaro-21-05-安装和配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#Manjaro-21-05-安装和配置" class="headerlink" title="Manjaro 21.05 安装和配置"></a>Manjaro 21.05 安装和配置</h2>
+      <p>ArchLinux官网：<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://archlinux.org/" >https://archlinux.org/</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/wurui1994/p/6279501.html" >学习环境配置：Manjaro、MSYS2以及常见软件</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><a href="%22https://www.jianshu.com/p/21c39bc4dd31%22">最受欢迎的Linux发行版, Manjaro折腾全记录（超长超详细）</a></li>
+<li><a href="%22https://www.136.la/java/show-55970.html%22">manjaro最新搜狗输入法安装教程</a></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.cnblogs.com/imzhizi/p/10718310.html" >Linux(Manjaro) -Docker 安装及基本配置</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+
+        <h2 id="Ubuntu-18-04-安装和配置"   >
+          <a href="#Ubuntu-18-04-安装和配置" class="heading-link"><i class="fas fa-link"></i></a><a href="#Ubuntu-18-04-安装和配置" class="headerlink" title="Ubuntu 18.04 安装和配置"></a>Ubuntu 18.04 安装和配置</h2>
+      <p><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/38364829" >Ubuntu 18.04 安装和配置</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></p>
+
+        <h2 id="源码阅读利器：UnderStand安装与踩坑"   >
+          <a href="#源码阅读利器：UnderStand安装与踩坑" class="heading-link"><i class="fas fa-link"></i></a><a href="#源码阅读利器：UnderStand安装与踩坑" class="headerlink" title="源码阅读利器：UnderStand安装与踩坑"></a>源码阅读利器：UnderStand安装与踩坑</h2>
+      
+        <h3 id="1）Understand用法及Linux安装指南"   >
+          <a href="#1）Understand用法及Linux安装指南" class="heading-link"><i class="fas fa-link"></i></a><a href="#1）Understand用法及Linux安装指南" class="headerlink" title="1）Understand用法及Linux安装指南"></a>1）Understand用法及Linux安装指南</h3>
+      <ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/44776823" >Understand: 静态代码分析神器</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://support.scitools.com/t/installing-on-linux-and-solaris/34" >Understand(源码阅读器)Installing on Linux and Solaris</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+
+        <h3 id="2）Understand在Manjaro上运行报错的解决"   >
+          <a href="#2）Understand在Manjaro上运行报错的解决" class="heading-link"><i class="fas fa-link"></i></a><a href="#2）Understand在Manjaro上运行报错的解决" class="headerlink" title="2）Understand在Manjaro上运行报错的解决"></a>2）Understand在Manjaro上运行报错的解决</h3>
+      <p>根据上述的Understand官网上的Linux安装指南，在Ubuntu 20.04上可以正常运行，但在Manjaro 21.05上出现如下错误：</p>
+<p>在<code>./understand</code> 时报错：</p>
+<p>​    <code>./understand: symbol lookup error: /usr/lib/libfontconfig.so.1: undefined symbol: FT_Done_MM_Var</code></p>
+<p>为此我作出以下调研和尝试：</p>
+<ol>
+<li>其他软件的相似问题和解决方式：</li>
+</ol>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41174045/article/details/115741968" >Tecplot运行报错:undefined symbol: FT_Done_MM_Var</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45569859/article/details/103341971" >Err：undefined symbol：FT_Done_MM_Var 及 .so 文件替换方法</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+<ol start="2">
+<li>Linux使用动态库时的undefined symbol问题：</li>
+</ol>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/guangyacyb/article/details/85165231?utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~default-5.control" >Linux C编程问题：symbol lookup error: xxx undefined symbol xxx</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/dfman1978/article/details/6104544" >“symbol lookup error”问题解决</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+<ol start="3">
+<li>LinuxQuestions上的相似问题：</li>
+</ol>
+<ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.linuxquestions.org/questions/slackware-14/libreoffice-libfontconfig-so-1-undefined-symbol-ft_done_mm_var-4175665794/?__cf_chl_jschl_tk__=369654a585808df0dfb545a61055e86a3c75a6a9-1622624792-0-AdAhDup71USuBhSCHZOhTIyF2Qkc9S7lvAPBCx90jYXf1-1KrPFU2Bu4tF1dQcH1KLNQQMXeVkCkjetRZ2bYxDIngiM26sx6ocPE0HKlyhlp-8VoX_ar9vQqV7M-5sgP8zwHt_AdrPGaCay-ahSIgrYL25MNCS260O4WwvanLcVNOjVc3jlsGZphOymef5vs_SGJy70B5y6fZpGDVQLIM7qizqEhOIt2lP0L1FIIWzu3iRIt7_Ozi7I6LLZlxS2oNb5pBqJULDEJQ2iymBO5q7F6-85iMPfBVCSPGw_6Eq67BbgvH3C8PLaszRAaaYyKk8xTRZbbL2-h47yY8shc_2RcTpaU3JlOKbBX1OW6suFe96CSfvxr1PBUjP1EsE9KSlYtQo0P8fHBH8uGbdVsVAsjT1In4NOPuYeXWRO74RCbe7qS8N10mP7KOPuwt-Q39umxi9Xq_o8B6B0dwCZq9-e65zZEqDQMBAfAw7OKqau0x7SfJWIK6CK9-aGx4dPbuS_skJOmxJNWwN6DuaavTsddgQSqZcwroEFjwdzbtS6s4zBWI3OXS3ilQN3GNDOMtr4dhqaxJT9UYxAaJfZkOAo" >libreoffice libfontconfig.so.1: undefined symbol: FT_Done_MM_Var</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+<p>从这些链接中我学到Linux使用动态库时需注意的问题和很多有用的Linux命令（如<code>ldd</code> 、<code>nm</code> 、<code>grep</code> 等），同时也发现自己<strong>对make的过程，Makefile的编写等还不熟悉</strong>，希望后面将这块知识补上。</p>
+<p>在调试的过程中我尝试了上述链接中的方法，但manjaro的<code>/usr/lib/</code>中 <code>libfreetype.so</code> 和<code>libfontconfig.so</code>都存在，<code>/usr/lib/libfontconfig.so</code>依赖于<code>/usr/liblib/freetype.so</code>，且<code>FT_Done_MM_Var    </code> 也在<code>libfreetype.so</code> 中定义了。而Understand的源码和makefile文件无法找到，因此<strong>不能通过修改编译过程解决</strong>。已知Understand在Ubuntu 18.04上可以正常运行，而Manjaro 21.05与Ubuntu的唯一区别在于Manjaro的Linux系统版本是5.10，而Ubuntu的系统版本是5.8，两系统中<code>libfontconfig</code>的版本一致（都是<code>libfontconfig.so.1.12.0</code>，而<code>libfreetype</code>的版本不同（Manjaro是<code>libfreetype.so.6.17.4</code>，Ubuntu是<code>libfreetype.so.6.17.1</code>），因此可能的问题应该与第一个链接（<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41174045/article/details/115741968" >Tecplot运行报错</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>）相似，<strong>需要降低Linux系统版本</strong>。</p>
+<p>Manjaro换内核的帖子（<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://tieba.baidu.com/p/6406292549" >链接</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>），尝试无果。</p>
+<p>最后，<em><strong>将understand安装目录中<code>/bin/linux64</code> 下的 <code>libfreetype.so.6</code> 删除，运行成功！</strong></em></p>
+<p>反向思考错误原因，应该是<code>/bin/linux/libfreetype.so</code> 版本低，没有定义FT_Done_MM_Var，使用<code>/bin/linux/libfreetype.so</code> 时会加载系统的<code>/usr/lib/libfontconfig.so.1</code> 动态库。该动态库依赖的是版本较高的<code>/usr/lib/libfreetype.so</code>，而后者因为相同的库已存在所以没有加载，至此问题解决。</p>
+
+        <h2 id="Linux命令学习与积累"   >
+          <a href="#Linux命令学习与积累" class="heading-link"><i class="fas fa-link"></i></a><a href="#Linux命令学习与积累" class="headerlink" title="Linux命令学习与积累"></a>Linux命令学习与积累</h2>
+      <ul>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-df.html" >Linux df 命令</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-locate.html" >Linux locate命令</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span><ul>
+<li>[[SOLVED]Locate command not found](<span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://bbs.archlinux.org/viewtopic.php?id=99084" >https://bbs.archlinux.org/viewtopic.php?id=99084</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span>)</li>
+</ul>
+</li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://www.runoob.com/linux/linux-comm-grep.html" >Linux grep 命令</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+<li><span class="exturl"><a class="exturl__link"   target="_blank" rel="noopener" href="https://blog.csdn.net/netwalk/article/details/19335771" >Linux下nm和ldd命令</a><span class="exturl__icon"><i class="fas fa-external-link-alt"></i></span></span></li>
+</ul>
+</div><footer class="post-footer"><div class="post-ending ending"><div class="ending__text">------ 本文结束，感谢您的阅读 ------</div></div><div class="post-copyright copyright"><div class="copyright-author"><span class="copyright-author__name">本文作者: </span><span class="copyright-author__value"><a href="http://Shang-QY.github.io">Shang Qingyu</a></span></div><div class="copyright-link"><span class="copyright-link__name">本文链接: </span><span class="copyright-link__value"><a href="http://shang-qy.github.io/2021/06/02/Manjaro%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91/">http://shang-qy.github.io/2021/06/02/Manjaro%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%B8%A9%E5%9D%91/</a></span></div><div class="copyright-notice"><span class="copyright-notice__name">版权声明: </span><span class="copyright-notice__value">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" rel="external nofollow" target="_blank">BY-NC-SA</a> 许可协议。转载请注明出处！</span></div></div><nav class="post-paginator paginator"><div class="paginator-next"><a class="paginator-next__link" href="/2021/05/29/MapReduce%E8%AE%BA%E6%96%87%E5%8F%8AMIT%E7%9B%B8%E5%85%B3%E5%AE%9E%E9%AA%8C%E6%80%BB%E7%BB%93/"><span class="paginator-prev__text">MapReduce论文及MIT相关实验总结</span><span class="paginator-next__icon"><i class="fas fa-angle-right"></i></span></a></div></nav></footer></div></div></div><div class="sidebar-wrap" id="sidebar-wrap"><aside class="sidebar" id="sidebar"><div class="sidebar-nav"><span class="sidebar-nav-toc current">文章目录</span><span class="sidebar-nav-ov">站点概览</span></div><section class="sidebar-toc"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MacOS%E5%88%B6%E4%BD%9C%E5%90%AF%E5%8A%A8%E7%9B%98"><span class="toc-number">1.</span> <span class="toc-text">
+          MacOS制作启动盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Manjaro-21-05-%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">
+          Manjaro 21.05 安装和配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-18-04-%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">
+          Ubuntu 18.04 安装和配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E5%88%A9%E5%99%A8%EF%BC%9AUnderStand%E5%AE%89%E8%A3%85%E4%B8%8E%E8%B8%A9%E5%9D%91"><span class="toc-number">4.</span> <span class="toc-text">
+          源码阅读利器：UnderStand安装与踩坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1%EF%BC%89Understand%E7%94%A8%E6%B3%95%E5%8F%8ALinux%E5%AE%89%E8%A3%85%E6%8C%87%E5%8D%97"><span class="toc-number">4.1.</span> <span class="toc-text">
+          1）Understand用法及Linux安装指南</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%EF%BC%89Understand%E5%9C%A8Manjaro%E4%B8%8A%E8%BF%90%E8%A1%8C%E6%8A%A5%E9%94%99%E7%9A%84%E8%A7%A3%E5%86%B3"><span class="toc-number">4.2.</span> <span class="toc-text">
+          2）Understand在Manjaro上运行报错的解决</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%A7%AF%E7%B4%AF"><span class="toc-number">5.</span> <span class="toc-text">
+          Linux命令学习与积累</span></a></li></ol></section><!-- ov = overview--><section class="sidebar-ov hide"><div class="sidebar-ov-author"><div class="sidebar-ov-author__avatar"><img class="sidebar-ov-author__avatar_img" src="/images/icons/stun-logo.svg" alt="avatar"></div><p class="sidebar-ov-author__text">hello world</p></div><div class="sidebar-ov-state"><a class="sidebar-ov-state-item sidebar-ov-state-item--posts" href="/archives/"><div class="sidebar-ov-state-item__count">4</div><div class="sidebar-ov-state-item__name">归档</div></a></div><div class="sidebar-ov-cc"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en" target="_blank" rel="noopener" data-popover="知识共享许可协议" data-popover-pos="up"><img src="/images/cc-by-nc-sa.svg"></a></div></section><div class="sidebar-reading"><div class="sidebar-reading-info"><span class="sidebar-reading-info__text">你已阅读了 </span><span class="sidebar-reading-info__num">0</span><span class="sidebar-reading-info__perc">%</span></div><div class="sidebar-reading-line"></div></div></aside></div><div class="clearfix"></div></div></main><footer class="footer" id="footer"><div class="footer-inner"><div><span>Copyright © 2024</span><span class="footer__icon"><i class="fas fa-heart"></i></span><span>Shang Qingyu</span></div><div><span>由 <a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> 强力驱动</span><span> v5.4.0</span><span class="footer__devider">|</span><span>主题 - <a href="https://github.com/liuyib/hexo-theme-stun/" title="Stun" target="_blank" rel="noopener">Stun</a></span><span> v2.6.2</span></div></div></footer><div class="loading-bar" id="loading-bar"><div class="loading-bar__progress"></div></div><div class="back2top" id="back2top"><span class="back2top__icon"><i class="fas fa-rocket"></i></span></div></div><script src="https://cdn.jsdelivr.net/npm/jquery@v3.4.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.2/velocity.ui.min.js"></script><script src="/js/utils.js?v=2.6.2"></script><script src="/js/stun-boot.js?v=2.6.2"></script><script src="/js/scroll.js?v=2.6.2"></script><script src="/js/header.js?v=2.6.2"></script><script src="/js/sidebar.js?v=2.6.2"></script></body></html>
